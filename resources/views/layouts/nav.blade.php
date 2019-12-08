@@ -1,10 +1,20 @@
 <nav>
-    <div class="nav-wrapper">
-      <a href="#!" class="brand-logo center">Logo</a>
-      <ul class="left hide-on-med-and-down">
-        <li><a href="#">Sass</a></li>
-        <li><a href="#">Components</a></li>
-<!--         <li class="active"><a href="collapsible.html">JavaScript</a></li> -->
-      </ul>
+    <div class="container-fluid bg-dark">
+      <div class="container">
+        <ul class="nav">
+          <li class="nav-item">
+          <a class="nav-link active" href=".">Главная</a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="/glava">Админка</a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+      </div>		
     </div>
   </nav>

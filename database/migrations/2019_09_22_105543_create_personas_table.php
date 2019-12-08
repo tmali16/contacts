@@ -19,12 +19,13 @@ class CreatePersonasTable extends Migration
             $table->string("mn");
             $table->string("ln")->default(null)->nullable();
             $table->bigInteger('doljnost_id')->unsigned()->index();
-            
+            $table->bigInteger('rank_id')->unsigned()->index();
             $table->timestamps();
         });
 
         Schema::table("persona", function(Blueprint $table){
             $table->foreign('doljnost_id')->references('id')->on('doljnost');
+            $table->foreign('rank_id')->references('id')->on('rank');
         });
     }
 

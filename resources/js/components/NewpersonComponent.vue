@@ -1,55 +1,62 @@
 <template>
       <div class="card">
-          <div class="card-content">
-            <div class="row">              
-              <div class="input-field col s5">
-                  <input type="text" id="autocomplete-input" class="autocomplete" v-model="fn">
-                  <label for="autocomplete-input">Фамилия</label>
-              </div>              
-              <div class="input-field col s5">
-                <input type="text" id="autocomplete-input" class="autocomplete" v-model="mn">
+        <div class="card-body">
+          <div class="row">              
+              <div class="form-group mr-2">
+                  <label for="autocomplete-input" class=""> Фамилия</label>
+                  <input type="text" id="autocomplete-input" class="form-control form-control-sm" v-model="fn">
+              </div>
+
+              <div class="form-group mr-2">
                 <label for="autocomplete-input">Имя</label>
+                <input type="text" id="autocomplete-input" class="form-control form-control-sm" v-model="mn">
               </div>
-              <div class="input-field col s10">
-                <input type="text" id="autocomplete-input" class="autocomplete" v-model="ln">
+
+              <div class="form-group mr-2">
                 <label for="autocomplete-input">Отчество</label>
+                <input type="text" id="autocomplete-input" class="form-control form-control-sm" v-model="ln">
               </div>
-              <div class="input-field col s10" style="padding: 0px;">                
-                <select  style="display: block;">
+
+              <div class="form-group mr-2">
+                <label for="doljnost">Должность</label>
+                <select  style="display: block;" class="form-control form-control-sm">
                   <option value="" >Должность</option>
                 </select>
               </div>
-            </div>
+          </div>
+          
 
     <!--------------------- phones ------------------------------------>
-              <div class="card " style="padding: 10px;">
-                <div class="card-title">
-                  Телефоны
-                </div>
-                <div class="card-content">
-                  <div class="row">
-                    <div class="phone-line" v-for="(item, index) in ret">
-                        
-                        <div class="input-field col s7">                
-                          <input :id="'telephone'+item" type="tel" class="validate" v-model="phoneNum">
-                          <label for="icon_telephone">Номер телефона</label>
-                        </div>
-                        <div class="input-field col s3" style="padding: 0px;">                
-                          <select  style="display: block;" :id="'type'+item" v-model="phoneType">
-                            <option  v-for="(item, index) in phoneTypeArr" :value="index" >{{item}}</option>
-                          </select>
-                        </div>
-                        <div class="m1 col s2 center">
-                          <a class="btn-floating waves-effect waves-light btn" id="NewPhoneCity" @click="Counts()" v-if="(item == ret) && (item <= 4)">+</a>  
-                        </div>
+      <div class="col-md-8">
+        <div class="card" style="padding: 10px;">
+          <div class="card-title">
+            Телефоны
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="" v-for="(item, index) in ret" :key="index">
+                  <div class="col row ">
+                    <label for="icon_telephone">Телефон {{item}}</label>       
+                    <div class="col-sm-6">
+                      <input :id="'telephone'+item" type="tel" class="form-control form-control-sm" v-model="phoneNum">
+                    </div>     
+                    <div class="col-sm-2 d-inline-block" style="padding: 0px;">                
+                      <select  style="display: block;" :id="'type'+item" v-model="phoneType" class="form-control form-control-sm">
+                        <option  v-for="(item, index) in phoneTypeArr" :value="index" :key="index">{{item}}</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-1">
+                      <a class="btn btn-sm btn-primary" href="#" id="NewPhoneCity" @click="Counts()" v-if="(item == ret) && (item <= 4)">+</a>  
                     </div>
                   </div>
-                </div>
               </div>
-    <!----------------------- end phones ---------------------------------->
-            <a class="waves-effect waves-light btn-small">Button</a>
+            </div>
           </div>
         </div>
+    <!----------------------- end phones ---------------------------------->
+        </div>
+      </div>
+  </div>
 </template>
 
 <script>

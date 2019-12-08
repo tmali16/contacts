@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class doljnost extends Model
+class table_rank extends Model
 {
-    protected $table = "doljnost";
+    protected $table = "rank";
 }

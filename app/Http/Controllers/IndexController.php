@@ -11,6 +11,10 @@ use App\PhoneType;
 use App\Upravlenie;
 use App\Gupravlenie;
 use App\User;
+use App\table_rank;
+use App\doljnost;
+use App\Doljnosti;
+
 
 class IndexController extends Controller
 {
@@ -69,7 +73,14 @@ class IndexController extends Controller
     }
     public function getGu()
     {
-        $gu = Gupravlenie::with('Upr.Otdel')->get();
-        return $gu->toJson();
+        $gu = Gupravlenie::with(['Upr.Otdel'])->get();
+        $ret = [
+            'gu'=>$gu,
+            'rank' => table_rank::all(),
+            'doljnost_name' => Doljnosti::all(),
+            'doljnost' => doljnost::all()
+        ];
+        return ($ret);
+
     }
 }

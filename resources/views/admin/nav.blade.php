@@ -1,11 +1,20 @@
 <nav>
-	<div class="container">
-		<div class="nav-wrapper">
-		  <a href="#!" class="brand-logo">Logo</a>
-		  <ul class="right hide-on-med-and-down">
-		    <li><a href="sass.html"><i class="material-icons left">search</i>Link with Left Icon</a></li>
-		    <li><a href="badges.html"><i class="material-icons right">view_module</i>Link with Right Icon</a></li>
-		  </ul>
-		</div>
+	<div class="container-fluid bg-dark">
+		<div class="container">
+			<ul class="nav">
+				<li class="nav-item">
+				<a class="nav-link active" href=".">Главная</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+				</li>
+			</ul>
+		</div>		
 	</div>
 </nav>
