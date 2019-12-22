@@ -17,5 +17,5 @@ Route::get('/', 'IndexController@index')->name('index');
 
 Route::get('/glava', 'AdminController@index')->name('admin_index');
 
-Route::get('/store/gu', 'IndexController@createGu')->name('create_gu');
+Route::get('/store/new', 'IndexController@create')->name('create_gu');
 Route::get('/store/upr', 'IndexController@createUpr');

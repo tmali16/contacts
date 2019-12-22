@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/gu', 'IndexController@getGu');
+Route::get('/phone', 'IndexController@getPhone');
+Route::get('/search', 'IndexController@search');

@@ -14,18 +14,23 @@
                     <table class="table ">
                         <thead>
                             <tr>
-                            <th>ГУ</th>
-                            <th>Управление</th>
-                            <th>Действие</th>
+                                <th>ГУ</th>
+                                <th>Управление</th>
+                                <th>Действие</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(item, index) in allGu.gu" :key="index">
-                                <td>{{item.fullname +' ('+item.shortname+')'}}</td>
+                                <td>
+                                    {{item.fullname +' ('+item.shortname+')'}}
+                                    <ul>
+                                        <li v-for="it in item.otdel" :key="it.id">{{it.fullname}}</li>
+                                    </ul>
+                                </td>
                                 <td>
                                     <span class="col" v-for="(items, index) in item.upr" :key="index">
                                         {{items.fullname +' ('+items.shortname+')'}}
-                                    </span>                                
+                                    </span>
                                 </td>
                                 <td>
                                     <a class="btn btn-light btn-small" data-toggle="modal" data-target="#modals_admin" @click="switchs(item.id)">
@@ -42,7 +47,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">   
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Добавить {{gu_id}}</h5>
+                        <h5 class="modal-title">Добавить</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" @click="switchs()">&times;</span>
                         </button>
@@ -67,18 +72,23 @@
                                 <label for="autocomplete-input">Абривиатура</label>
                                 <input type="text" id="autocomplete-input" class="form-control form-control-sm" v-model="shortname">                                        
                             </div>
-                            <div class="col align-right ">
-                                <a class="btn btn-small btn-info text-white" @click="store()">Добавить</a>
-                            </div>
                         </div>
                         <div class="" v-if="modal_add_id == 4">
                             <div class="form-group col s5">
-                                <label for="autocomplete-input">Выберите</label>
-                                <select name="" id="" class="form-control">
+                                <label for="autocomplete-input">Выберите отдел, упарвление, главное управление {{podvedomstvo_id}}</label>
+                                <select name="" id="" class="form-control" v-model="podvedomstvo_id">
+                                    <option  v-for="(item, index) in allGu.gu" :key="index" :value="item.id">
+                                        {{item.fullname}}
+                                    </option>
+                                </select>
+                                <br>
+                                <label for="autocomplete-input">Выберите должность</label>
+                                <select name="" id="" class="form-control" v-model="doljnosti_id">
                                     <option  v-for="(item, index) in allGu.doljnost_name" :key="index" :value="item.id">{{item.doljnost}}</option>
-                                </select>                                
+                                </select>
                             </div>
                         </div>
+
                         <div class="" v-if="modal_add_id == 3">
                             <div class="form-group mr-2">
                                 <label for="autocomplete-input" class=""> Фамилия</label>
@@ -97,19 +107,23 @@
 
                             <div class="form-group mr-2">
                                 <label for="doljnost">Должность</label>
-                                <select  style="display: block;" class="form-control form-control-sm">
+                                <select  style="display: block;" class="form-control form-control-sm" v-model="doljnost_id">
                                     <option v-for="item in allGu.doljnost" :key="item.id" :value="item.id" >{{item.doljnost}}</option>
                                 </select>
                             </div>
                             <div class="form-group mr-2">
                                 <label for="doljnost">Звание</label>
-                                <select  style="display: block;" class="form-control form-control-sm">
+                                <select  style="display: block;" class="form-control form-control-sm" v-model="zvanie_id">
                                     <option v-for="(item, index) in allGu.rank" :key="index" :value="item.id" >{{item.rank}}</option>
                                 </select>
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer" v-if="modal_add_id != 0">
+                            <a href="#" class="btn btn-sm btn-primary text-white"  @click="store()">Сохранить</a>
+                    </div>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -132,7 +146,11 @@
                 modal_add_id: 0,
                 fn: null,
                 mn: null,
-                ln: null
+                ln: null,
+                zvanie_id: null,
+                doljnost_id: null,
+                podvedomstvo_id: 1,
+                doljnosti_id: null
             }
         },
         mounted() {
@@ -150,22 +168,28 @@
             },
 
             store: function () {
-                if(this.slujba != 'gu'){
-                    var url = ''+this.slujba+'?fullname='+this.fullname + "&shortname=" + this.shortname+'&id='+this.id;
-                }else{
-                    var url = ''+this.slujba+'?fullname='+this.fullname + "&shortname=" + this.shortname;
+                if(this.modal_add_id == 1){
+                    var url = 'state_id='+this.modal_add_id+'&fullname='+this.fullname + "&shortname=" + this.shortname+'&guid='+this.gu_id;
+                }else if(this.modal_add_id == 2){
+                    var url = 'state_id='+this.modal_add_id+'&fullname='+this.fullname + "&shortname=" + this.shortname+'&guid='+this.gu_id;
+                }else if(this.modal_add_id == 3){
+                    var url = 'state_id='+this.modal_add_id+'&fn='+this.fullname + "&mn=" + this.ln+'&zvanie_id='+this.zvanie_id+'&doljnost_id='+this.doljnost_id+'&guid='+this.gu_id;
+                }else if(this.modal_add_id == 4){
+                    var url = 'state_id='+this.modal_add_id+'&podgu_id='+this.podvedomstvo_id + "&doljnosti_id=" + this.doljnosti_id;
                 }
                 console.log(url)
-                axios.get('/store/'+url
+                axios.get('/store/new?'+url
                 ).then((response)=>{
                     this.fullname = null;
                     this.shortname = null;
                     this.slujba = null;
                     this.id = null
-                    this.switchs()
+                    this.switchs(this.gu_id)
+                    $('#modals_admin').modal('hide')
                 }).catch((error)=>{
                     console.log('store gu error '+error.errors)
                 })
+                this.getGu();
             }
         }
 

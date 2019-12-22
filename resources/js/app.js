@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('new_person-component', require('./components/NewpersonComponent.vue').default);
 Vue.component('creategu-component', require('./components/CreateguComponent.vue').default);
+Vue.component('main-component', require('./components/MainComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
