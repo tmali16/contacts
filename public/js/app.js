@@ -1969,6 +1969,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2004,7 +2005,10 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/gu').then(function (response) {
         _this.allGu = response.data;
-      })["catch"](function (error) {});
+        console.log(_this.allGu);
+      })["catch"](function (error) {
+        console.log("get all error " + error.data);
+      });
     },
     store: function store() {
       var _this2 = this;
@@ -2033,6 +2037,13 @@ __webpack_require__.r(__webpack_exports__);
         console.log('store gu error ' + error.errors);
       });
       this.getGu();
+    },
+    getUprOtdel: function getUprOtdel(gu_id) {
+      axios.get('/api/uprotd?gu_id=' + gu_id).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log("get all error " + error.data);
+      });
     }
   }
 });
@@ -37823,19 +37834,25 @@ var render = function() {
                             staticClass: "form-control",
                             attrs: { name: "", id: "" },
                             on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.podvedomstvo_id = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              }
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.podvedomstvo_id = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                function($event) {
+                                  return _vm.getUprOtdel(_vm.podvedomstvo_id)
+                                }
+                              ]
                             }
                           },
                           _vm._l(_vm.allGu.gu, function(item, index) {
@@ -37853,6 +37870,8 @@ var render = function() {
                           }),
                           0
                         ),
+                        _vm._v(" "),
+                        _c("select", { attrs: { name: "otdupr", id: "" } }),
                         _vm._v(" "),
                         _c("br"),
                         _vm._v(" "),
@@ -38260,9 +38279,9 @@ var render = function() {
               _vm._l(_vm.data, function(item) {
                 return _c("li", { key: item.id }, [
                   _vm._v(
-                    "\n                        " +
+                    "\r\n                        " +
                       _vm._s(item.fullname) +
-                      "\n                        "
+                      "\r\n                        "
                   ),
                   item.otdel != null
                     ? _c(
@@ -51072,8 +51091,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\OSPanel\domains\contacts\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\OSPanel\domains\contacts\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\ospanel\OSPanel\domains\contacts\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\ospanel\OSPanel\domains\contacts\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

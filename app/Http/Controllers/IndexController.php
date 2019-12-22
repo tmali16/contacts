@@ -125,9 +125,22 @@ class IndexController extends Controller
             'otdel'=> Otdel::all(),
             'rank' => table_rank::all(),
             'doljnost_name' => Doljnosti::all(),
-            'doljnost' => doljnost::with(['', '']),
+            'doljnost' => doljnost::with(['otdel', 'upr', 'dol'])->get(),
         ];
         return ($ret);
 
+    }
+    public function getUprOtd(Request $request)
+    {
+        if($request->json()){
+            
+            $id = $request->gu_id;
+            $ret = null;
+            $ret = Upravlenie::where('gu_id' , '=',$id)->get();
+            if($ret->count() == 0){
+                $ret = Otdel::where('upr_id' , '=', $id)->get();
+            }
+            return $ret->toJson();
+        }
     }
 }

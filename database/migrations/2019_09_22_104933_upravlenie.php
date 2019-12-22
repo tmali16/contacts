@@ -21,9 +21,9 @@ class Upravlenie extends Migration
             $table->timestamps();
         });
 
-        Schema::table("upravlenie", function(Blueprint $table){
-            $table->foreign('gu_id')->references('id')->on('gupravlenie');
-        });
+        // Schema::table("upravlenie", function(Blueprint $table){
+        //     $table->foreign('gu_id')->references('id')->on('gupravlenie');
+        // });
     }
 
     /**

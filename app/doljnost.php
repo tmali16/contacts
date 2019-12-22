@@ -10,14 +10,17 @@ class doljnost extends Model
 
     public function otdel()
     {
-        return $this->hasMany('App\Otdel');
+        return $this->hasOne('App\Otdel', 'id', 'otdel_id');
     }
     
     public function upr()
     {
-        return $this->hasMany('App\Upravlenie');
+        return $this->hasOne('App\Upravlenie', 'id', 'otdel_id');
     }
-    
+    public function dol()
+    {
+        return $this->hasOne('App\Doljnosti', 'id', 'name_id');
+    }
     public function gu()
     {
         return $this->hasMany('App\Gupravlenie');

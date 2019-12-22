@@ -20,9 +20,9 @@ class CreateOtdelsTable extends Migration
             $table->bigInteger('upr_id')->unsigned()->index();
             $table->timestamps();
         });
-        Schema::table("otdel", function(Blueprint $table){
-            $table->foreign('upr_id')->references('id')->on('upravlenie');
-        });
+        // Schema::table("otdel", function(Blueprint $table){
+        //     $table->foreign('upr_id')->references('id')->on('upravlenie');
+        // });
     }
 
     /**

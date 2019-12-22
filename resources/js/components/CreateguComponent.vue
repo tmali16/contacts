@@ -76,11 +76,12 @@
                         <div class="" v-if="modal_add_id == 4">
                             <div class="form-group col s5">
                                 <label for="autocomplete-input">Выберите отдел, упарвление, главное управление {{podvedomstvo_id}}</label>
-                                <select name="" id="" class="form-control" v-model="podvedomstvo_id">
+                                <select name="" id="" class="form-control" v-model="podvedomstvo_id" @change="getUprOtdel(podvedomstvo_id)">
                                     <option  v-for="(item, index) in allGu.gu" :key="index" :value="item.id">
                                         {{item.fullname}}
                                     </option>
                                 </select>
+                                <select name="otdupr" id=""></select>
                                 <br>
                                 <label for="autocomplete-input">Выберите должность</label>
                                 <select name="" id="" class="form-control" v-model="doljnosti_id">
@@ -155,6 +156,7 @@
         },
         mounted() {
             this.getGu();
+            
         },
         methods: {
             switchs: function(id){
@@ -163,7 +165,9 @@
             getGu: function () {
                 axios.get('/api/gu').then((response)=>{
                     this.allGu = response.data
+                    console.log(this.allGu)
                 }).catch(function(error){
+                    console.log("get all error " + error.data)
                 })
             },
 
@@ -190,6 +194,13 @@
                     console.log('store gu error '+error.errors)
                 })
                 this.getGu();
+            },
+            getUprOtdel: function(gu_id){
+                axios.get('/api/uprotd?gu_id='+gu_id).then((response)=>{
+                    console.log(response.data)
+                }).catch(function(error){
+                    console.log("get all error " + error.data)
+                })
             }
         }
 

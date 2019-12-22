@@ -20,3 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/gu', 'IndexController@getGu');
 Route::get('/phone', 'IndexController@getPhone');
 Route::get('/search', 'IndexController@search');
+
+// get uprav or otdel with gu id
+Route::get('/uprotd', 'IndexController@getUprOtd');
