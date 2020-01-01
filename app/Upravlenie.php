@@ -7,10 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class Upravlenie extends Model
 {
     protected $table = "upravlenie";
+    public $timestamps = false;
 
-    public function Otdel()
+
+    public function children()
     {
-        return $this->hasMany(\App\Otdel::class, 'upr_id', 'id');
+        return $this->hasMany('App\Upravlenie', 'parent_id', 'id');
     }
+
+    public function is_parent(){
+        if ($this->parent_id != null){
+            return false;
+        }
+        return true;
+    }
+    
 
 }

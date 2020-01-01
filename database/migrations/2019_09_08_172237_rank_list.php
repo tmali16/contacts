@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TableRank extends Migration
+class RankList extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class TableRank extends Migration
      */
     public function up()
     {
-        Schema::create('rank', function (Blueprint $table) {
+        Schema::create('rank_list', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string("rank");
-            $table->timestamps();
         });
     }
 
@@ -27,6 +26,6 @@ class TableRank extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rank');
+        Schema::dropIfExists('rank_list');
     }
 }

@@ -62,3 +62,39 @@
     text-decoration: none;
     cursor: pointer;
   }
+  .createupr{
+      font-size: 12px;
+      text-decoration: none;
+      background-color: #888;
+      padding: 0px 14px 0px 14px;
+      color: #fff;
+      margin-bottom: 10px;
+  }
+  .mainTree-view{
+      cursor: pointer;
+      margin-bottom: 10px;
+      .tree-text{
+        //   background-color: #ddd;
+          padding: 5px;
+          &:hover{
+            background-color: #ddd;
+          }
+      }
+      li>span{
+        //   background-color: #ddd;
+          margin-top: 10px;
+            &:hover{
+                background-color: #ddd;
+            }
+      }
+  }
+  .treeMain{
+      cursor: pointer;
+      a{
+        text-decoration: none;
+      }
+      div{
+          display: block;
+      }
+
+  }

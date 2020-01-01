@@ -8,13 +8,10 @@ use App\Upravlenie;
 class Gupravlenie extends Model
 {
     protected $table = "gupravlenie";
+    public $timestamps = false;
 
-    public function Upr()
+    public function children()
     {
-        return $this->hasMany(\App\Upravlenie::class, 'gu_id', 'id');
-    }
-    public function otdel()
-    {
-        return $this->hasMany(\App\otdel::class, 'upr_id', 'id');
+        return $this->hasMany('App\Upravlenie', 'gu_id', 'id');
     }
 }

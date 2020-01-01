@@ -17,7 +17,6 @@ class CreateGupravleniesTable extends Migration
             $table->bigIncrements('id');
             $table->string('fullname');
             $table->string("shortname")->nullable()->default(null);
-            $table->timestamps();
         });
     }
 

@@ -10705,3 +10705,45 @@ a.text-dark:focus {
   cursor: pointer;
 }
 
+.createupr {
+  font-size: 12px;
+  text-decoration: none;
+  background-color: #888;
+  padding: 0px 14px 0px 14px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.mainTree-view {
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.mainTree-view .tree-text {
+  padding: 5px;
+}
+
+.mainTree-view .tree-text:hover {
+  background-color: #ddd;
+}
+
+.mainTree-view li > span {
+  margin-top: 10px;
+}
+
+.mainTree-view li > span:hover {
+  background-color: #ddd;
+}
+
+.treeMain {
+  cursor: pointer;
+}
+
+.treeMain a {
+  text-decoration: none;
+}
+
+.treeMain div {
+  display: block;
+}
+

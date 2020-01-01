@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card border-0 shadow">
         <div class="card-body">
             <div class="card">
                 <div class="card-body">
@@ -11,126 +11,15 @@
                     <span class="card-title">
                         Список главных управлений
                     </span>
-                    <table class="table ">
-                        <thead>
-                            <tr>
-                                <th>ГУ</th>
-                                <th>Управление</th>
-                                <th>Действие</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(item, index) in allGu.gu" :key="index">
-                                <td>
-                                    {{item.fullname +' ('+item.shortname+')'}}
-                                    <ul>
-                                        <li v-for="it in item.otdel" :key="it.id">{{it.fullname}}</li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <span class="col" v-for="(items, index) in item.upr" :key="index">
-                                        {{items.fullname +' ('+items.shortname+')'}}
-                                    </span>
-                                </td>
-                                <td>
-                                    <a class="btn btn-light btn-small" data-toggle="modal" data-target="#modals_admin" @click="switchs(item.id)">
-                                        Добавить
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <TreeView :datas="gu"></TreeView>
                 </div>
             </div>
-        </div>
-        <div id="modals_admin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">   
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Добавить</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" @click="switchs()">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <select name="" id="" class="form-control" v-model="modal_add_id">
-                                <option value="0" selected>--Выберите--</option>
-                                <option value="1">Управление</option>
-                                <option value="2">Отдел</option>
-                                <option value="4">Должность</option>
-                                <option value="3">Сотрудник</option>
-                            </select>
-                        </div>
-                        <div class="" v-if="modal_add_id == 1 || modal_add_id == 2">
-                            <div class="form-group col s5">
-                                <label for="autocomplete-input">Полное название</label>
-                                <input type="text" id="autocomplete-input" class="form-control form-control-sm" v-model="fullname">
-                                
-                            </div>
-                            <div class="form-group col s5">
-                                <label for="autocomplete-input">Абривиатура</label>
-                                <input type="text" id="autocomplete-input" class="form-control form-control-sm" v-model="shortname">                                        
-                            </div>
-                        </div>
-                        <div class="" v-if="modal_add_id == 4">
-                            <div class="form-group col s5">
-                                <label for="autocomplete-input">Выберите отдел, упарвление, главное управление {{podvedomstvo_id}}</label>
-                                <select name="" id="" class="form-control" v-model="podvedomstvo_id" @change="getUprOtdel(podvedomstvo_id)">
-                                    <option  v-for="(item, index) in allGu.gu" :key="index" :value="item.id">
-                                        {{item.fullname}}
-                                    </option>
-                                </select>
-                                <select name="otdupr" id=""></select>
-                                <br>
-                                <label for="autocomplete-input">Выберите должность</label>
-                                <select name="" id="" class="form-control" v-model="doljnosti_id">
-                                    <option  v-for="(item, index) in allGu.doljnost_name" :key="index" :value="item.id">{{item.doljnost}}</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="" v-if="modal_add_id == 3">
-                            <div class="form-group mr-2">
-                                <label for="autocomplete-input" class=""> Фамилия</label>
-                                <input type="text" id="autocomplete-input" class="form-control form-control-sm" v-model="fn">
-                            </div>
-
-                            <div class="form-group mr-2">
-                                <label for="autocomplete-input">Имя</label>
-                                <input type="text" id="autocomplete-input" class="form-control form-control-sm" v-model="mn">
-                            </div>
-
-                            <div class="form-group mr-2">
-                                <label for="autocomplete-input">Отчество</label>
-                                <input type="text" id="autocomplete-input" class="form-control form-control-sm" v-model="ln">
-                            </div>
-
-                            <div class="form-group mr-2">
-                                <label for="doljnost">Должность</label>
-                                <select  style="display: block;" class="form-control form-control-sm" v-model="doljnost_id">
-                                    <option v-for="item in allGu.doljnost" :key="item.id" :value="item.id" >{{item.doljnost}}</option>
-                                </select>
-                            </div>
-                            <div class="form-group mr-2">
-                                <label for="doljnost">Звание</label>
-                                <select  style="display: block;" class="form-control form-control-sm" v-model="zvanie_id">
-                                    <option v-for="(item, index) in allGu.rank" :key="index" :value="item.id" >{{item.rank}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer" v-if="modal_add_id != 0">
-                            <a href="#" class="btn btn-sm btn-primary text-white"  @click="store()">Сохранить</a>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
+        </div>        
     </div>
 </template>
 
 <script>
+    import VJstree from 'vue-jstree'
     export default {
         data: function(){
             return {
@@ -151,11 +40,15 @@
                 zvanie_id: null,
                 doljnost_id: null,
                 podvedomstvo_id: 1,
-                doljnosti_id: null
+                doljnosti_id: null,
+                gu: []
             }
         },
         mounted() {
-            this.getGu();
+            this.getGupr();
+
+        },
+        computed:{
             
         },
         methods: {
@@ -167,10 +60,18 @@
                     this.allGu = response.data
                     console.log(this.allGu)
                 }).catch(function(error){
-                    console.log("get all error " + error.data)
+                    console.log("!!!!! ERROR !!!! function getGu STATUS CODE=" + error.response.status +';  message: ' + error.response.data.message)
                 })
             },
-
+            getGupr: function(){
+                axios.get('/api/getgu').then((response)=>{
+                    this.gu = response.data
+                    console.log(this.gu)
+                }).catch(function(error){
+                    console.error("!!!!! ERROR !!!! function getGupr error STATUS=" + error.response.status +';  message: ' + error.response.data.message)
+                    
+                })
+            },
             store: function () {
                 if(this.modal_add_id == 1){
                     var url = 'state_id='+this.modal_add_id+'&fullname='+this.fullname + "&shortname=" + this.shortname+'&guid='+this.gu_id;
@@ -181,7 +82,6 @@
                 }else if(this.modal_add_id == 4){
                     var url = 'state_id='+this.modal_add_id+'&podgu_id='+this.podvedomstvo_id + "&doljnosti_id=" + this.doljnosti_id;
                 }
-                console.log(url)
                 axios.get('/store/new?'+url
                 ).then((response)=>{
                     this.fullname = null;
@@ -201,7 +101,7 @@
                 }).catch(function(error){
                     console.log("get all error " + error.data)
                 })
-            }
+            },
         }
 
     }

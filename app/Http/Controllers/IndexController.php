@@ -27,7 +27,7 @@ class IndexController extends Controller
     public function getPhone(Request $request)
     {
         if($request->json()){
-            return Gupravlenie::with(['upr.otdel','otdel'])->get();
+            return Gupravlenie::with(['children.children'])->get();
         }
     }
 
@@ -39,7 +39,7 @@ class IndexController extends Controller
             $data = Gupravlenie::where('fullname', 'like', "$ser%")->orWhere('shortname', 'like', "$ser%")->get();
 
             if($data->count() == 0){
-               $data = Otdel::where('fullname', 'like', "$ser%")->orWhere('shortname', 'like', "$ser%")->get();
+               $data = Upravlenie::where('fullname', 'like', "$ser%")->orWhere('shortname', 'like', "$ser%")->get();
             }
             
             return $data;
@@ -76,12 +76,12 @@ class IndexController extends Controller
     public function create(Request $request)
     {
         if($request->json()){
-            if($request->state_id == 1){
+            if($request->add_id == 0){
                 $upr = new Upravlenie();
                 $rules = [
                     'fullname'=>'required|min:5',
                     'shortname'=>'nullable',
-                    'guid'=>'required|integer'
+                    'guid'=>'nullable|integer'
                 ];
     
                 if($this->validate($request, $rules, [])){
@@ -91,20 +91,20 @@ class IndexController extends Controller
                     $upr->save();
                 }
             }
-            if($request->state_id == 2){
-                $Otdel = new Otdel();
+            if($request->add_id == 1){
+                $upr = new Upravlenie();
                 $rules = [
                     'fullname'=>'required|min:5',
                     'shortname'=>'nullable',
-                    'guid'=>'required|integer'
+                    'parent_id'=>'nullable'
                 ];
     
                 if($this->validate($request, $rules, [])){
-                    $Otdel->fullname = $request->fullname;
-                    $Otdel->shortname = $request->shortname;
-                    $Otdel->upr_id = $request->guid;
-                    $Otdel->save();
-                } 
+                    $upr->fullname = $request->fullname;
+                    $upr->shortname = $request->shortname;
+                    $upr->parent_id = $request->parent_id;
+                    $upr->save();
+                }
             }
             if($request->state_id == 4){
                 $doljnost = new doljnost();
@@ -113,33 +113,42 @@ class IndexController extends Controller
                 $doljnost->save();
             }
             
-            return $this->getGu();
+            return response()->json(['message'=>"Данные добавлены"]);
         }
     }
     public function getGu()
     {
-        $gu = Gupravlenie::with(['Upr.Otdel', 'otdel'])->get();
+        $gu = Gupravlenie::with(['Upr'])->get();
+
         $ret = [
             'gu'=>$gu,
             'upr'=> Upravlenie::all(),
-            'otdel'=> Otdel::all(),
             'rank' => table_rank::all(),
             'doljnost_name' => Doljnosti::all(),
-            'doljnost' => doljnost::with(['otdel', 'upr', 'dol'])->get(),
+            'doljnost' => doljnost::with(['upr', 'dol'])->get(),
         ];
+
         return ($ret);
 
     }
+
+    public function returnGu()
+    {
+        $gu = Gupravlenie::with(['children.children.children'])->get();
+        // dd(Gupravlenie::root()->get());
+        return $gu->toJson();
+    }
+
     public function getUprOtd(Request $request)
     {
         if($request->json()){
             
             $id = $request->gu_id;
             $ret = null;
-            $ret = Upravlenie::where('gu_id' , '=',$id)->get();
-            if($ret->count() == 0){
-                $ret = Otdel::where('upr_id' , '=', $id)->get();
-            }
+            $ret = Upravlenie::where('gu_id' , '=',$id)->whereNull('parent_id')->get();
+            // if($ret->count() == 0){
+            //     $ret = Otdel::where('upr_id' , '=', $id)->get();
+            // }
             return $ret->toJson();
         }
     }

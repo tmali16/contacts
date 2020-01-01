@@ -23,6 +23,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('new_person-component', require('./components/NewpersonComponent.vue').default);
 Vue.component('creategu-component', require('./components/CreateguComponent.vue').default);
 Vue.component('main-component', require('./components/MainComponent.vue').default);
+Vue.component('TreeView', require('./components/TreeComponent.vue').default);
+Vue.component('ModalView', require('./components/ModalComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -34,5 +36,6 @@ const app = new Vue({
     el: '#app',
     data:{
         modal:false
-    }
+    },
+    
 });
