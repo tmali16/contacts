@@ -17,8 +17,8 @@ class Upravlenie extends Migration
             $table->bigIncrements('id');
             $table->string('fullname');
             $table->string("shortname")->nullable()->default(null);
-            $table->bigInteger('gu_id')->unsigned()->index();
-            $table->bigInteger('parent_id')->unsigned()->index();
+            $table->bigInteger('gu_id')->unsigned()->index()->nullable()->default(null);
+            $table->bigInteger('parent_id')->unsigned()->index()->nullable()->default(null);
             // $table->timestamps();
         });
 

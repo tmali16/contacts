@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\doljnosti;
+use App\doljnost_list;
 
 
 class DoljnostSeeder extends Seeder
@@ -28,7 +28,7 @@ class DoljnostSeeder extends Seeder
             'Советник председателя',
         ];
         foreach ($dol as $key => $value) {
-            doljnosti::create(['doljnost' => $value]);
+            doljnost_list::create(['doljnost' => $value]);
         }
     }
 }

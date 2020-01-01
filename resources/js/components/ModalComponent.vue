@@ -11,11 +11,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="">
+                    <div class="form-group col">
+                        <select class="form-control " v-model="upr_dolj">
+                            <option value="3">Добавить управление</option>
+                            <option value="4">Добавить должность</option>
+                        </select>
+                    </div>
+                    <div class="" v-if="upr_dolj == 3">                        
                         <div class="form-group col s5">
                             <label for="autocomplete-input1">Полное название</label>
                             <input type="text" id="autocomplete-input1" class="form-control form-control-sm" v-model="fullname_">
-                            
                         </div>
                         <div class="form-group col s5">
                             <label for="autocomplete-input2">Абривиатура</label>
@@ -24,6 +29,12 @@
                         <input type="hidden" v-model="gu_id">
                         <input type="hidden" v-model="parent_id" v-if="gu_id == null">
                         {{parent_id}}
+                    </div>
+                    <div class="form-group col" v-if="upr_dolj == 4">
+                        <label for="doljnosti">Должность </label>
+                        <select class="form-control " id="doljnosti" v-model="doljnost">
+                            <option v-for="(item, index) in dolj" :key="index" :value="item.id">{{item.doljnost}}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -47,20 +58,34 @@
                 fullname_: '',
                 shortname_: '',
                 gu_id_: null,
-                parent_id_: null
+                parent_id_: null,
+                upr_dolj: 3,
+                dolj: [],
+                doljnost: null
             }
         },
         mounted() {
-            
+            this.getDolj()
         },
         methods:{
+            getDolj: function(){
+                axios.get('/api/dolj').then((response)=>{
+                    this.dolj = response.data
+                }).catch(function(error){
+                    console.log("!!!!! ERROR !!!! function getGu STATUS CODE=" + error.response.status +';  message: ' + error.response.data.message)
+                })
+            },
             store: function() {
                 this.parent_id_ = this.parent_id 
                 this.gu_id_ = this.gu_id
-                if(this.add_id == 0){
-                    var url = 'add_id='+this.add_id+'&fullname='+this.fullname_ + "&shortname=" + this.shortname_+'&guid='+this.gu_id_;
-                }else if(this.add_id == 1){
-                    var url = 'add_id='+this.add_id+'&fullname='+this.fullname_ + "&shortname=" + this.shortname_+'&parent_id='+this.parent_id_;
+                if(this.upr_dolj == 3){
+                    if(this.add_id == 0){
+                        var url = 'add_id='+this.add_id+'&fullname='+this.fullname_ + "&shortname=" + this.shortname_+'&guid='+this.gu_id_;
+                    }else if(this.add_id == 1){
+                        var url = 'add_id='+this.add_id+'&fullname='+this.fullname_ + "&shortname=" + this.shortname_+'&parent_id='+this.parent_id_;
+                    }
+                }else if(this.upr_dolj == 4){
+                    var url = "add_id="+this.upr_dolj+"&dol_id="+this.doljnost+"&guid="+this.gu_id;
                 }
                 axios.get('/store/new?'+url).then((response)=>{
                     this.fullname_ = null;
@@ -71,9 +96,8 @@
                     this.parent_id_ = null
                     $('#modals').modal('hide')
                 }).catch((error)=>{
-                    console.log('store gu error '+error.response.message)
+                    console.log('store DOLJNOST error '+error.response.message)
                 })
-                this.getGupr();
             }
         }
     }

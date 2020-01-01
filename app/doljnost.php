@@ -8,23 +8,24 @@ class doljnost extends Model
 {
     protected $table = "doljnost";
     public $timestamps = false;
+    protected $hidden = [ 'parent_id', 'doljnost_id'];
 
-    public function otdel()
+    public function doljnost()
     {
-        return $this->hasOne('App\Otdel', 'id', 'otdel_id');
+        return $this->hasOne('App\doljnost_list', 'id', 'doljnost_id');
+    }
+
+    public function Gu()
+    {
+        return $this->hasOne('App\Gupravlenie', "id", 'parent_id');
     }
     
     public function upr()
     {
-        return $this->hasOne('App\Upravlenie', 'id', 'otdel_id');
+        return $this->hasOne("App\Upravlenie", "id", 'parent_id');
     }
-    public function dol()
+    public function persona()
     {
-        return $this->hasOne('App\Doljnosti', 'id', 'name_id');
+        return $this->hasOne("App\Persona", 'doljnost_id', 'id');
     }
-    public function gu()
-    {
-        return $this->hasMany('App\Gupravlenie');
-    }
-    
 }

@@ -21,6 +21,8 @@ Route::get('/gu', 'IndexController@getGu');
 Route::get('/getgu', 'IndexController@returnGu');
 Route::get('/phone', 'IndexController@getPhone');
 Route::get('/search', 'IndexController@search');
+Route::get('/dolj', 'IndexController@getdolj');
+Route::get('/getone', 'AdminController@getOne');
 
 // get uprav or otdel with gu id
 Route::get('/uprotd', 'IndexController@getUprOtd');

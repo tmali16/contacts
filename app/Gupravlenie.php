@@ -14,4 +14,8 @@ class Gupravlenie extends Model
     {
         return $this->hasMany('App\Upravlenie', 'gu_id', 'id');
     }
+    public function doljnost()
+    {
+        return $this->hasMany('App\doljnost', 'parent_id', 'id');
+    }
 }

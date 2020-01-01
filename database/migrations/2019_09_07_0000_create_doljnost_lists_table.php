@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DoljnostisList extends Migration
+class CreateDoljnostListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class DoljnostisList extends Migration
      */
     public function up()
     {
-        Schema::create('doljnost_list', function (Blueprint $table) {
+        Schema::create('doljnost_lists', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('doljnost');
+            $table->string("doljnost");
         });
     }
 
@@ -26,6 +26,6 @@ class DoljnostisList extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('doljnost_list');
+        Schema::dropIfExists('doljnost_lists');
     }
 }

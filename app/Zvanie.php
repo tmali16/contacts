@@ -4,10 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PhoneType extends Model
+class Zvanie extends Model
 {
-    protected $table ="phone_type";
+    protected $table = "zvanie_lists";
     public $timestamps = false;
-    //
-
 }

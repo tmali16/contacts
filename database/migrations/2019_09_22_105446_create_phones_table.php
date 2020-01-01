@@ -17,10 +17,12 @@ class CreatePhonesTable extends Migration
             $table->bigIncrements('id');
             $table->string("number");
             $table->bigInteger('type_id')->unsigned()->index();
+            $table->bigInteger('persona_id')->unsigned()->index();
             $table->timestamps();
         });
         Schema::table("phone", function(Blueprint $table){
             $table->foreign('type_id')->references('id')->on('phone_type');
+            $table->foreign('persona_id')->references('id')->on('persona');
         });
     }
 

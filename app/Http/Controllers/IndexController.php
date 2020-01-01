@@ -11,9 +11,9 @@ use App\PhoneType;
 use App\Upravlenie;
 use App\Gupravlenie;
 use App\User;
-use App\table_rank;
+use App\doljnost_list;
 use App\doljnost;
-use App\Doljnosti;
+use App\Zvanie;
 
 
 class IndexController extends Controller
@@ -106,11 +106,18 @@ class IndexController extends Controller
                     $upr->save();
                 }
             }
-            if($request->state_id == 4){
+            if($request->add_id == 4){
                 $doljnost = new doljnost();
-                $doljnost->otdel_id = $request->podgu_id;
-                $doljnost->name_id = $request->doljnosti_id;
-                $doljnost->save();
+                $rules = [
+                    'dol_id'=>'nullable|integer',
+                    'guid'=>'nullable|integer'
+                ];
+
+                if($this->validate($request, $rules, [])){
+                    $doljnost->parent_id = $request->guid;
+                    $doljnost->doljnost_id = $request->dol_id;
+                    $doljnost->save();
+                }
             }
             
             return response()->json(['message'=>"Данные добавлены"]);
@@ -123,18 +130,23 @@ class IndexController extends Controller
         $ret = [
             'gu'=>$gu,
             'upr'=> Upravlenie::all(),
-            'rank' => table_rank::all(),
-            'doljnost_name' => Doljnosti::all(),
-            'doljnost' => doljnost::with(['upr', 'dol'])->get(),
+            'zvanie' => Zvanie::all(),
+            'doljnost_name' => doljnost_list::all(),
+            'doljnost' => doljnost::with(['upr', 'doljnost', 'Gu'])->get(),
         ];
 
         return ($ret);
 
     }
-
+    public function getdolj(Request $request)
+    {
+        if($request->json()){
+            return doljnost_list::all();
+        }
+    }
     public function returnGu()
     {
-        $gu = Gupravlenie::with(['children.children.children'])->get();
+        $gu = Gupravlenie::with(['children.children.children', 'doljnost.doljnost'])->get();
         // dd(Gupravlenie::root()->get());
         return $gu->toJson();
     }

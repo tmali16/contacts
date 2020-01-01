@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\table_rank;
+use App\Zvanie;
 
 
 class RanksSeeder extends Seeder
@@ -18,7 +18,7 @@ class RanksSeeder extends Seeder
             'Младший лейтенант', 'Лейтенант', 'Старший лейтенант', 'Капитан', 'Майор', 'Подполковник', 'Полковник', 'Генерал-майор'
         ];
         foreach ($rank as $key => $value) {
-            table_rank::create(['rank' => $value]);
+            Zvanie::create(['zvanie' => $value]);
         }
     }
 }
