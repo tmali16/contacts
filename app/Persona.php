@@ -13,4 +13,13 @@ class Persona extends Model
     {
         return $this->hasMany('App\Phone', 'persona_id', 'id');
     }
+    public function doljnost()
+    {
+        return $this->hasOne('App\doljnost', 'id', 'doljnost_id');
+    }
+
+    public function zvanie()
+    {
+        return $this->hasOne('App\Zvanie', 'id', 'zvanie_id');
+    }
 }

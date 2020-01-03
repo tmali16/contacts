@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::get('/gu', 'IndexController@getGu');
 Route::get('/getgu', 'IndexController@returnGu');
@@ -23,6 +23,8 @@ Route::get('/phone', 'IndexController@getPhone');
 Route::get('/search', 'IndexController@search');
 Route::get('/dolj', 'IndexController@getdolj');
 Route::get('/getone', 'AdminController@getOne');
+Route::POST('/put', 'AdminController@addPersona');
+Route::post('/addphone', 'AdminController@addPhone');
 
 // get uprav or otdel with gu id
 Route::get('/uprotd', 'IndexController@getUprOtd');

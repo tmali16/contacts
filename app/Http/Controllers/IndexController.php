@@ -27,7 +27,10 @@ class IndexController extends Controller
     public function getPhone(Request $request)
     {
         if($request->json()){
-            return Gupravlenie::with(['children.children'])->get();
+
+            // $ret = doljnost::with(['Gu.children.children', 'upr', 'doljnost','persona.phone.type'])->get();
+            $ret = Persona::with(['zvanie', 'doljnost.doljnost', 'doljnost.upr', 'doljnost.Gu', 'phone'])->get();
+            return $ret;
         }
     }
 
@@ -41,8 +44,11 @@ class IndexController extends Controller
             if($data->count() == 0){
                $data = Upravlenie::where('fullname', 'like', "$ser%")->orWhere('shortname', 'like', "$ser%")->get();
             }
-            
-            return $data;
+            if($data->count() == 0){
+                $data = Persona::where('fn', 'like', "$ser%")->orWhere("mn", 'like', "$ser%")->orWhere("ln", 'like', "$ser%")->get();
+            }
+            $ret = Persona::whereIn('id', $data)->with(['zvanie', 'doljnost.doljnost', 'doljnost.upr', 'doljnost.Gu', 'phone'])->get();
+            return $ret;
         }
     }
     // public function create(Request $request)
@@ -109,12 +115,14 @@ class IndexController extends Controller
             if($request->add_id == 4){
                 $doljnost = new doljnost();
                 $rules = [
-                    'dol_id'=>'nullable|integer',
-                    'guid'=>'nullable|integer'
+                    'dol_id'=>'nullable',
+                    'guid'=>'nullable',
+                    'guid'=>'nullable',
                 ];
 
                 if($this->validate($request, $rules, [])){
-                    $doljnost->parent_id = $request->guid;
+                    $doljnost->gu_id = $request->guid;
+                    $doljnost->upr_id = $request->uprid;
                     $doljnost->doljnost_id = $request->dol_id;
                     $doljnost->save();
                 }
@@ -125,14 +133,14 @@ class IndexController extends Controller
     }
     public function getGu()
     {
-        $gu = Gupravlenie::with(['Upr'])->get();
+        $gu = Gupravlenie::with(['children.children.doljnost', 'children.doljnost.doljnost', 'doljnost.doljnost'])->get();
 
         $ret = [
             'gu'=>$gu,
             'upr'=> Upravlenie::all(),
             'zvanie' => Zvanie::all(),
             'doljnost_name' => doljnost_list::all(),
-            'doljnost' => doljnost::with(['upr', 'doljnost', 'Gu'])->get(),
+            'doljnost' => doljnost::with(['doljnost', 'Gu'])->get(),
         ];
 
         return ($ret);
@@ -146,7 +154,7 @@ class IndexController extends Controller
     }
     public function returnGu()
     {
-        $gu = Gupravlenie::with(['children.children.children', 'doljnost.doljnost'])->get();
+        $gu = Gupravlenie::with(['children.children', 'doljnost.doljnost', 'children.doljnost.doljnost'])->get();
         // dd(Gupravlenie::root()->get());
         return $gu->toJson();
     }

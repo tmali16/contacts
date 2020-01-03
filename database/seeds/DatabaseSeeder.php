@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GupravlenieSeeder::class);
         $this->call(RanksSeeder::class);
         $this->call(DoljnostSeeder::class);
+        $this->call(PhonetypeSeeder::class);
         
     }
 }

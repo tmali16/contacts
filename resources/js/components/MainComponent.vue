@@ -8,7 +8,7 @@
                     <label for="exampleFormControlInput1">Поиск</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Поиск...." v-model="search_text" @keyup="search()" @focusout="get()">
                 </div>
-                <div class="alert alert-danger" role="alert" >
+                <div class="alert alert-danger" role="alert" v-if="errors != undefined && errors.length > 0 ">
                   <ul v-for="(item, index) in errors" :key="index">
                       <li>{{item.message}}</li>
                   </ul>
@@ -17,48 +17,58 @@
         </div>
     </div>    
 
-    <div class="col-md-5 mt-2">        
-        <div class="card shadow border-0"  style="border-radius: 0;">
-            <div class="card-header">Структура</div>
-            <div class="card-body">
-                <ul>
-                    <li v-for="item in data" :key="item.id" class="mainTree-view">
-                        <span class="tree-text">{{item.fullname}}</span>
-                        <ul v-if="item.children != null">
-                            <li v-for="t in item.children" :key="t.id"><span class="tree-text" >{{t.fullname}}</span></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-7 mt-2">
+    <div class="col-md-12 mt-2">
         <div class="card shadow border-0"  style="border-radius: 0;">
             <div class="card-header">Номера</div>
             <div class="card-body">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col" rowspan="2">Каб.</th>
-                            <th scope="col" rowspan="2">Должность</th>
-                            <th scope="col" rowspan="2">ФИО</th>
-                            <th scope="col" colspan="3" class="text-center">Телефон</th>                            
+                            <th rowspan="2" class="pb-1 pt-1 align-middle">Каб.</th>
+                            <th scope="col" rowspan="2" colspan="2" class="pb-1 pt-1 text-center align-middle">
+                                Должность ФИО
+                            </th>
+                            <th scope="col" colspan="3" class="text-center pb-1 pb-1 align-middle">Телефон</th>                            
                         </tr>
                         <tr>
-                            <td>Городской</td>
-                            <td>Внутренний</td>
-                            <td>Сотовый</td>
+                            <td class="pb-1 pt-1 align-middle text-center">Городской</td>
+                            <td class="pb-1 pt-1 align-middle text-center">Внутренний</td>
+                            <td class="pb-1 pt-1 align-middle text-center">Сотовый</td>
 
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
+                        <tr v-for="(item, index) in data" :key="index" >
+                            <th scope="rowgroup">{{index+1}}</th>
+                            <td colspan="2" class="pb-1 pt-1">
+                                <p class="m-0 p-0">{{item.doljnost.doljnost.doljnost + " "}}</p>
+                                <p class="m-0 p-0">{{item.zvanie.zvanie}}</p>
+                                
+                                <span class="p-0 m-0" >
+                                    {{item.fn + " " + item.mn + " " + item.ln}}
+                                </span>
+                            </td>
+                            <td class="pb-1 pt-1 align-middle text-center">
+                                <span v-if="item.phone != undefined && item.phone.length > 0">
+                                    <span v-for="phone in item.phone" :key="phone.id">
+                                        <p v-if="phone.type_id == 1" class="p-0 m-0">{{phone.number}}</p>
+                                    </span>
+                                </span>
+                            </td>
+                            <td class="pb-1 pt-1 align-middle text-center">
+                            <span v-if="item.phone != undefined && item.phone.length > 0">
+                                    <span v-for="phone in item.phone" :key="phone.id">
+                                        <p v-if="phone.type_id == 2" class="p-0 m-0">{{phone.number}}</p>
+                                    </span>
+                                </span>
+                            </td>
+                            <td class="pb-1 pt-1 align-middle text-center">
+                                <span v-if="item.phone != undefined && item.phone.length > 0">
+                                    <span v-for="phone in item.phone" :key="phone.id">
+                                        <p v-if="phone.type_id == 3" class="p-0 m-0">{{phone.number}}</p>
+                                    </span>
+                                </span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -85,6 +95,7 @@
                 if(this.search_text.length == 0 || this.search_text == null){
                     axios.get('/api/phone').then((response)=>{
                         this.data = response.data
+                        console.log(this.data)
                     }).catch(function(error){
                         console.log(error.response)
                         this.errors = error.response.data

@@ -85,7 +85,12 @@
                         var url = 'add_id='+this.add_id+'&fullname='+this.fullname_ + "&shortname=" + this.shortname_+'&parent_id='+this.parent_id_;
                     }
                 }else if(this.upr_dolj == 4){
-                    var url = "add_id="+this.upr_dolj+"&dol_id="+this.doljnost+"&guid="+this.gu_id;
+                    if(this.add_id == 0){
+                        var url = "add_id="+this.upr_dolj+"&dol_id="+this.doljnost+"&guid="+this.gu_id+'&uprid=';
+                    }else if(this.add_id == 1){
+                        var url = "add_id="+this.upr_dolj+"&dol_id="+this.doljnost+"&guid=&uprid="+this.parent_id;
+                    }
+                    
                 }
                 axios.get('/store/new?'+url).then((response)=>{
                     this.fullname_ = null;

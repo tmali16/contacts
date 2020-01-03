@@ -15,6 +15,11 @@ class Upravlenie extends Model
         return $this->hasMany('App\Upravlenie', 'parent_id', 'id');
     }
 
+    public function doljnost()
+    {
+        return $this->hasMany('App\doljnost', 'upr_id', 'id');
+    }
+
     public function is_parent(){
         if ($this->parent_id != null){
             return false;

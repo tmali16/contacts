@@ -15,11 +15,13 @@ class CreateDoljnostsTable extends Migration
     {
         Schema::create('doljnost', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('parent_id')->unsigned()->index();
+            $table->bigInteger('gu_id')->unsigned()->index()->nullable()->default(null);
+            $table->bigInteger('upr_id')->unsigned()->index()->nullable()->default(null);
             $table->bigInteger('doljnost_id')->unsigned()->index();
         });
         Schema::table("doljnost", function(Blueprint $table){
-            $table->foreign('parent_id')->references('id')->on('gupravlenie');
+            $table->foreign('gu_id')->references('id')->on('gupravlenie');
+            $table->foreign('upr_id')->references('id')->on('upravlenie');
             $table->foreign('doljnost_id')->references('id')->on('doljnost_lists');
         });
     }

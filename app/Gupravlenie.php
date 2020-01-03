@@ -16,6 +16,6 @@ class Gupravlenie extends Model
     }
     public function doljnost()
     {
-        return $this->hasMany('App\doljnost', 'parent_id', 'id');
+        return $this->hasMany('App\doljnost', 'gu_id', 'id');
     }
 }

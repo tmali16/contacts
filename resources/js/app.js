@@ -25,6 +25,7 @@ Vue.component('creategu-component', require('./components/CreateguComponent.vue'
 Vue.component('main-component', require('./components/MainComponent.vue').default);
 Vue.component('TreeView', require('./components/TreeComponent.vue').default);
 Vue.component('ModalView', require('./components/ModalComponent.vue').default);
+Vue.component('ModalPerson', require('./components/ModalPersonComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

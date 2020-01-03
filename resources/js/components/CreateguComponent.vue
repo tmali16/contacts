@@ -3,7 +3,8 @@
         <div class="card-body">
             <div class="card">
                 <div class="card-body">
-                    <a class="btn btn-sm btn-primary" @click="switchs('gu')" data-toggle="modal" data-target="#modals_admin">Добавить ГУ</a>
+                    <a class="btn btn-sm btn-primary rounded-0" @click="switchs('gu')" data-toggle="modal" data-target="#modals_admin">Добавить ГУ</a>
+                    <button class="btn btn-success btn-sm rounded-0" @click="personAdd()">Добавить</button>
                 </div>
             </div>
             <div class="card mt-2" >
@@ -14,7 +15,19 @@
                     <TreeView :datas="gu"></TreeView>
                 </div>
             </div>
-        </div>        
+        </div>
+        <ModalPerson></ModalPerson>
+        <div class="toast" role="status" aria-live="assertive" aria-atomic="true" id="toast_message" style="position: absolute; top: 0; right: 0; z-index: 9999;">
+            <div class="toast-header">
+                <strong class="mr-auto">Message</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                
+            </div>
+        </div>
     </div>
 </template>
 
@@ -78,6 +91,9 @@
                     console.log("get all error " + error.data)
                 })
             },
+            personAdd: function(){
+                $("#personmodal").modal("show")
+            }
         }
 
     }
