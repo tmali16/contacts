@@ -65,18 +65,22 @@
                             Телефон
                         </div>
                         <div class="card-body pt-1 pb-1">
-                            <div class="col-md-12 form-row" v-for="i in tel" :key="i" id="tels">
+                            <div class="col-md-12 form-row" v-for="(i, index) in tel" :key="i" id="tels">
                                 <div class="form-group col-sm-6">
-                                    <label :for="'tel_'+i">Телефон {{i}}<span class="text-danger">*</span></label>
+                                    <label :for="'tel_'+i">Телефон {{index +1 }}<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-sm rounded-0 " :id="'tel_'+i" @change="phoneAdd">
                                 </div>
-                                <div class="form-group col-sm-6">
+                                <div class="form-group col-sm-5">
                                     <label :for="'tel_type_'+i">Тип</label>
                                     <select class="form-control form-control-sm rounded-0 " :id="'tel_type_'+i">
                                         <option value="1">Городской</option>
                                         <option value="2">Внутренний</option>
                                         <option value="3">Сотовый</option>
                                     </select>
+                                </div>
+                                <div class="form-group col-sm-1" v-if="tel.length > 1">
+                                    <label :for="'tel_type_'" class="text-white">Удалить</label>
+                                    <button class="btn btn-sm btn-link" @click="treshPhone(index)"><i class="fa fa-trash text-danger" aria-hidden="true"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +116,7 @@
                 tel_city: '',
                 tel_inner: '',
                 tel_mob: '',
-                tel: [1]
+                tel: [1 ]
             }
         },
         mounted() {
@@ -184,8 +188,8 @@
                 }
             },
             phoneAdd: function () {
-                if(this.tel <= 3){
-                    this.tel++
+                if(this.tel.length <= 5){
+                    this.tel.push(this.tel[this.tel.length - 1] +1);
                 }
             },
             getPhone: function () {
@@ -194,12 +198,15 @@
                     let tel = $("#tel_"+s).val();
                     let sel = $("#tel_type_"+s).children("option:selected").val()
                     let tr = {
-                        'tel': tel,
+                        'tel': tel.trim(),
                         'type': sel
                     }
                     telp.push(tr)
                 }
                 return telp;
+            },
+            treshPhone: function(i){
+                this.tel.splice(i, 1)
             }
         }
     }

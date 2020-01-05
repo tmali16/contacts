@@ -8,7 +8,7 @@ class Upravlenie extends Model
 {
     protected $table = "upravlenie";
     public $timestamps = false;
-
+    protected $hidden = ['parent_id', 'gu_id'];
 
     public function children()
     {
@@ -18,6 +18,11 @@ class Upravlenie extends Model
     public function doljnost()
     {
         return $this->hasMany('App\doljnost', 'upr_id', 'id');
+    }
+
+    public function gu()
+    {
+        return $this->belongsTo("App\Gupravlenie");
     }
 
     public function is_parent(){

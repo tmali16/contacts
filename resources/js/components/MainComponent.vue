@@ -34,12 +34,11 @@
                             <td class="pb-1 pt-1 align-middle text-center">Городской</td>
                             <td class="pb-1 pt-1 align-middle text-center">Внутренний</td>
                             <td class="pb-1 pt-1 align-middle text-center">Сотовый</td>
-
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in data" :key="index" >
-                            <th scope="rowgroup">{{index+1}}</th>
+                            <th scope="rowgroup">{{index+1}} {{item.doljnost.gu}}</th>
                             <td colspan="2" class="pb-1 pt-1">
                                 <p class="m-0 p-0">{{item.doljnost.doljnost.doljnost + " "}}</p>
                                 <p class="m-0 p-0">{{item.zvanie.zvanie}}</p>
@@ -56,7 +55,7 @@
                                 </span>
                             </td>
                             <td class="pb-1 pt-1 align-middle text-center">
-                            <span v-if="item.phone != undefined && item.phone.length > 0">
+                                <span v-if="item.phone != undefined && item.phone.length > 0">
                                     <span v-for="phone in item.phone" :key="phone.id">
                                         <p v-if="phone.type_id == 2" class="p-0 m-0">{{phone.number}}</p>
                                     </span>
@@ -72,6 +71,11 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="text-center" id="spinner">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -84,28 +88,33 @@
             return {
                 data: [],
                 search_text: '',
-                errors: []
+                errors: [],
+                spinner: '',
             }
         },
         mounted() {
+            this.spinner = $("#spinner");
             this.get()
         },
         methods: {
             get: function () {
+                this.spinner.show()
                 if(this.search_text.length == 0 || this.search_text == null){
                     axios.get('/api/phone').then((response)=>{
                         this.data = response.data
                         console.log(this.data)
                     }).catch(function(error){
-                        console.log(error.response)
+                        this.spinner.addClass("hidden")
                         this.errors = error.response.data
                     })
                 }
+                this.spinner.hide()
             },
             search: function () {
-                if(this.search_text != null && this.search_text.trim().length != 0){
+                if(this.search_text && this.search_text.trim().length != 0){
                     axios.get('/api/search?q='+this.search_text).then((response)=>{
                         this.data = response.data
+                        console.log(this.data)
                     }).catch(function(error){
                         console.log(error.message)
                     })

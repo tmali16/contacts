@@ -2058,37 +2058,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       data: [],
       search_text: '',
-      errors: []
+      errors: [],
+      spinner: ''
     };
   },
   mounted: function mounted() {
+    this.spinner = $("#spinner");
     this.get();
   },
   methods: {
     get: function get() {
       var _this = this;
 
+      this.spinner.show();
+
       if (this.search_text.length == 0 || this.search_text == null) {
         axios.get('/api/phone').then(function (response) {
           _this.data = response.data;
           console.log(_this.data);
         })["catch"](function (error) {
-          console.log(error.response);
+          this.spinner.addClass("hidden");
           this.errors = error.response.data;
         });
       }
+
+      this.spinner.hide();
     },
     search: function search() {
       var _this2 = this;
 
-      if (this.search_text != null && this.search_text.trim().length != 0) {
+      if (this.search_text && this.search_text.trim().length != 0) {
         axios.get('/api/search?q=' + this.search_text).then(function (response) {
           _this2.data = response.data;
+          console.log(_this2.data);
         })["catch"](function (error) {
           console.log(error.message);
         });
@@ -2328,6 +2339,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2427,8 +2442,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     phoneAdd: function phoneAdd() {
-      if (this.tel <= 3) {
-        this.tel++;
+      if (this.tel.length <= 5) {
+        this.tel.push(this.tel[this.tel.length - 1] + 1);
       }
     },
     getPhone: function getPhone() {
@@ -2438,13 +2453,16 @@ __webpack_require__.r(__webpack_exports__);
         var tel = $("#tel_" + s).val();
         var sel = $("#tel_type_" + s).children("option:selected").val();
         var tr = {
-          'tel': tel,
+          'tel': tel.trim(),
           'type': sel
         };
         telp.push(tr);
       }
 
       return telp;
+    },
+    treshPhone: function treshPhone(i) {
+      this.tel.splice(i, 1);
     }
   }
 });
@@ -38334,7 +38352,7 @@ var render = function() {
                 _vm._l(_vm.data, function(item, index) {
                   return _c("tr", { key: index }, [
                     _c("th", { attrs: { scope: "rowgroup" } }, [
-                      _vm._v(_vm._s(index + 1))
+                      _vm._v(_vm._s(index + 1) + " " + _vm._s(item.doljnost.gu))
                     ]),
                     _vm._v(" "),
                     _c(
@@ -38428,7 +38446,9 @@ var render = function() {
                 }),
                 0
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _vm._m(1)
           ])
         ]
       )
@@ -38484,6 +38504,21 @@ var staticRenderFns = [
           _vm._v("Сотовый")
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-center", attrs: { id: "spinner" } }, [
+      _c(
+        "div",
+        {
+          staticClass: "spinner-border text-primary",
+          attrs: { role: "status" }
+        },
+        [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+      )
     ])
   }
 ]
@@ -39211,7 +39246,7 @@ var render = function() {
                     _c(
                       "div",
                       { staticClass: "card-body pt-1 pb-1" },
-                      _vm._l(_vm.tel, function(i) {
+                      _vm._l(_vm.tel, function(i, index) {
                         return _c(
                           "div",
                           {
@@ -39222,7 +39257,7 @@ var render = function() {
                           [
                             _c("div", { staticClass: "form-group col-sm-6" }, [
                               _c("label", { attrs: { for: "tel_" + i } }, [
-                                _vm._v("Телефон " + _vm._s(i)),
+                                _vm._v("Телефон " + _vm._s(index + 1)),
                                 _c("span", { staticClass: "text-danger" }, [
                                   _vm._v("*")
                                 ])
@@ -39236,7 +39271,7 @@ var render = function() {
                               })
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "form-group col-sm-6" }, [
+                            _c("div", { staticClass: "form-group col-sm-5" }, [
                               _c("label", { attrs: { for: "tel_type_" + i } }, [
                                 _vm._v("Тип")
                               ]),
@@ -39262,7 +39297,43 @@ var render = function() {
                                   ])
                                 ]
                               )
-                            ])
+                            ]),
+                            _vm._v(" "),
+                            _vm.tel.length > 1
+                              ? _c(
+                                  "div",
+                                  { staticClass: "form-group col-sm-1" },
+                                  [
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "text-white",
+                                        attrs: { for: "tel_type_" }
+                                      },
+                                      [_vm._v("Удалить")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-sm btn-link",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.treshPhone(index)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "fa fa-trash text-danger",
+                                          attrs: { "aria-hidden": "true" }
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
                           ]
                         )
                       }),

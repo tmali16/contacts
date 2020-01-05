@@ -39,13 +39,18 @@ class IndexController extends Controller
         if($request->json()){
             $ser = trim($request->q);
 
-            $data = Gupravlenie::where('fullname', 'like', "$ser%")->orWhere('shortname', 'like', "$ser%")->get();
-
+            $data = Gupravlenie::where('fullname', 'like', "$ser%")->get("id");
             if($data->count() == 0){
-               $data = Upravlenie::where('fullname', 'like', "$ser%")->orWhere('shortname', 'like', "$ser%")->get();
+                $data = Gupravlenie::Where('shortname', 'like', "$ser%")->get("id");
             }
             if($data->count() == 0){
-                $data = Persona::where('fn', 'like', "$ser%")->orWhere("mn", 'like', "$ser%")->orWhere("ln", 'like', "$ser%")->get();
+               $data = Upravlenie::where('fullname', 'like', "$ser%")->get("id");
+            }
+            if($data->count() == 0){
+                $data = Upravlenie::Where('shortname', 'like', "$ser%")->get("id");
+            }
+            if($data->count() == 0){
+                $data = Persona::where('fn', 'like', "$ser%")->orWhere("mn", 'like', "$ser%")->orWhere("ln", 'like', "$ser%")->get("id");
             }
             $ret = Persona::whereIn('id', $data)->with(['zvanie', 'doljnost.doljnost', 'doljnost.upr', 'doljnost.Gu', 'phone'])->get();
             return $ret;

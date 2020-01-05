@@ -7,6 +7,8 @@ use App\doljnost;
 use App\Gupravlenie;
 use App\Persona;
 use App\Phone;
+use App\Upravlenie;
+
 
 
 class AdminController extends Controller
@@ -80,7 +82,18 @@ class AdminController extends Controller
     }
     public function addPhone(Request $request)
     {
-        dd($request->arr);
+        $ser    = mb_strtoupper($request->q);
+        if(!empty($ser)){
+            $data   = Upravlenie::where('fullname', 'like', "$ser%")->orWhere('shortname', 'like', "$ser%")->get("id");
+
+            $dolj   = doljnost::whereIn('upr_id', $data)->get("id");
+
+            $ret    = Persona::whereIn('doljnost_id', $dolj)->with(['doljnost.doljnost', 'doljnost.upr.gu', 'doljnost.Gu', 'zvanie','phone'])->get();
+        }else{
+            $ret    = Persona::with(['doljnost.doljnost', 'doljnost.upr.gu', 'doljnost.Gu','zvanie','phone'])->get();
+        }
+
+        return $ret;
     }
 
 }
