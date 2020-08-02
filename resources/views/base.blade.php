@@ -31,12 +31,12 @@
 
 </head>
 <body>
-    <div id="app">
-        @yield("content")
-    </div>
-    
-
-    <!-- Compiled and minified JavaScript -->
-    
+    <div id="app" class="h-100">
+        @yield('nav')
+        
+        <div class="main">
+            @yield("content")
+        </div>        
+    </div>       
 </body>
 </html>

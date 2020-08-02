@@ -7,7 +7,9 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -20,12 +22,10 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('new_person-component', require('./components/NewpersonComponent.vue').default);
-Vue.component('creategu-component', require('./components/CreateguComponent.vue').default);
-Vue.component('main-component', require('./components/MainComponent.vue').default);
-Vue.component('TreeView', require('./components/TreeComponent.vue').default);
-Vue.component('ModalView', require('./components/ModalComponent.vue').default);
-Vue.component('ModalPerson', require('./components/ModalPersonComponent.vue').default);
+Vue.component('index', require('./components/index/index.vue').default);
+Vue.component('admin', require('./components/admin/admin.vue').default);
+Vue.component('contact-item', require('./components/admin/ContactItem.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -34,9 +34,5 @@ Vue.component('ModalPerson', require('./components/ModalPersonComponent.vue').de
  */
 
 const app = new Vue({
-    el: '#app',
-    data:{
-        modal:false
-    },
-    
+    el: '#app',  
 });

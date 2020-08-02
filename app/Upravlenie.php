@@ -15,14 +15,9 @@ class Upravlenie extends Model
         return $this->hasMany('App\Upravlenie', 'parent_id', 'id');
     }
 
-    public function doljnost()
+    public function Persona()
     {
-        return $this->hasMany('App\doljnost', 'upr_id', 'id');
-    }
-
-    public function gu()
-    {
-        return $this->belongsTo("App\Gupravlenie");
+        return $this->hasMany("App\Persona", "id", "doljnost_id");
     }
 
     public function is_parent(){
@@ -31,6 +26,4 @@ class Upravlenie extends Model
         }
         return true;
     }
-    
-
 }

@@ -1,14 +1,14 @@
 @extends('base')
 
 @section("title")
-Телефонный справочник
+справочник
+@endsection
+
+@section('nav')
+    @include('layouts.nav')
 @endsection
 
 @section("content")
-@include('layouts.nav')
-<div class="container main">
-        <main-component></main-component>
-</div>
-
-
+    <br><br>
+    <index></index>
 @endsection

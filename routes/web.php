@@ -13,9 +13,11 @@
 
 Auth::routes();
 
-Route::get('/', 'IndexController@index')->name('index');
+Route::get('/', 'IndexController@index');
 
-Route::get('/glava', 'AdminController@index')->name('admin_index');
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', 'AdminController@index');
+    Route::get('/contact/data/all', "AdminController@ContactAll");
+});
 
-Route::get('/store/new', 'IndexController@create')->name('create_gu');
-Route::get('/store/upr', 'IndexController@createUpr');
+

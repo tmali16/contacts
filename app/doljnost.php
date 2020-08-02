@@ -12,7 +12,7 @@ class doljnost extends Model
 
     public function doljnost()
     {
-        return $this->belongsTo('App\doljnost_list', 'doljnost_id');
+        return $this->belongsTo('App\doljnost_list', 'doljnost', 'doljnost_id', 'upr_id');
     }
 
     public function Gu()

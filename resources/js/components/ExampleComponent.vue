@@ -16,8 +16,20 @@
 
 <script>
     export default {
+        props:[],
+        data() {
+            return {
+                
+            }
+        },
         mounted() {
-            console.log('Component mounted.')
-        }
+            
+        },
+        computed: {
+            
+        },
+        methods: {
+            
+        },
     }
 </script>

@@ -6,98 +6,46 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index.scss';
 
 //fontawesome
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
-.main{
-    margin-top: 50px;
+html, body{
+    height: 100%;
+    //background-image: url(/public/img/bg.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.cyan{
+    background-color: $cyan !important;
+}
+.denim{
+    background-color: $denim;
 }
 
-.tab_content{
-    display: none;
-    
-}
-.tab_active{
-    display: block;
-}
-.tab_active_s{
-    background-color: rgb(0, 195, 255);
-}
-.collection{
-    li{
-        span{
-            cursor: pointer;
-        }
-    }
-}
-
-.modals {
-    // display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
+.main{    
+    margin: 0;
+    padding: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
-  }
-
-.modals-content {
-    // background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    // border: 1px solid #888;
-    width: 40%; /* Could be more or less, depending on screen size */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 94%;
 }
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  .createupr{
-      font-size: 12px;
-      text-decoration: none;
-      background-color: #888;
-      padding: 0px 14px 0px 14px;
-      color: #fff;
-      margin-bottom: 10px;
-  }
-  .mainTree-view{
-      cursor: pointer;
-      margin-bottom: 10px;
-      .tree-text{
-        //   background-color: #ddd;
-          padding: 5px;
-          &:hover{
-            background-color: #ddd;
-          }
-      }
-      li>span{
-        //   background-color: #ddd;
-          margin-top: 10px;
-            &:hover{
-                background-color: #ddd;
-            }
-      }
-  }
-  .treeMain{
-      cursor: pointer;
-      a{
-        text-decoration: none;
-      }
-      div{
-          display: block;
-      }
-
-  }
+.menu-them-header{
+    padding: 10px;
+    border-bottom: solid $blue 3px;
+    background-color: #fff;
+}
+.col-sidebar{
+    width: 16rem;
+}
+.admin_panel{
+    background-color: #ddd;
+    height: 100%;
+}
+.sidebar_admin_active_class{
+    color: $blue;
+}
