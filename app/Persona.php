@@ -15,7 +15,7 @@ class Persona extends Model
     }
     public function doljnost()
     {
-        return $this->hasOne('App\doljnost', 'id', 'doljnost_id');
+        return $this->belongsTo('App\doljnost');
     }
 
     public function zvanie()

@@ -8,4 +8,9 @@ class doljnost_list extends Model
 {
     public $timestamps = false;
     protected $hidden = [];
+
+    public function persona()
+    {
+        return $this->belongsTo('App\doljnost', 'doljnost_id', 'upr_id');
+    }
 }

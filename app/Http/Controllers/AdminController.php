@@ -7,7 +7,7 @@ use App\doljnost;
 use App\Persona;
 use App\Phone;
 use App\Upravlenie as Uprava;
-
+use Illuminate\Support\Facades\DB;
 
 
 class AdminController extends Controller
@@ -23,13 +23,14 @@ class AdminController extends Controller
         $headers = [];
         $data = [
             "parrent"=>Uprava::whereNull('parent_id')->get(),
-            "slujba"=>Uprava::with("children")->whereNull("parent_id")->get()
+            "slujba"=>Uprava::with(["children.doljnosti.persona", 'doljnosti.persona'])->whereNull("parent_id")->get()
         ];
         return response()->json($data, 200, $headers);
     }
-    public function test()
+    public function test(Request $request)
     {
-        $d = Uprava::with("doljnosti")->get()->toJson();
+        
+        $d = $this->ContactAll($request);
         echo "<pre>";
         return $d;
     }

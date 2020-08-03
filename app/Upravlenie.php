@@ -18,7 +18,7 @@ class Upravlenie extends Model
     public function doljnosti()
     {
         // return $this->hasMany("App\Persona", "id", "doljnost_id");
-        return $this->belongsToMany('App\doljnost_list', 'doljnost', 'upr_id', 'doljnost_id');        
+        return $this->belongsToMany('App\doljnost_list', 'doljnost', 'upr_id', 'doljnost_id');
     }
 
     public function is_parent(){

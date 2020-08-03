@@ -10,22 +10,13 @@ class doljnost extends Model
     public $timestamps = false;
     protected $hidden = [ 'parent_id', 'doljnost_id', 'upr_id', 'gu_id'];
 
-    public function doljnost()
-    {
-        return $this->belongsTo('App\doljnost_list', 'doljnost', 'doljnost_id', 'upr_id');
-    }
-
-    public function Gu()
-    {
-        return $this->hasOne('App\Gupravlenie', "id", 'gu_id');
-    }
-    
-    public function upr()
-    {
-        return $this->hasOne("App\Upravlenie", "id", 'upr_id');
-    }
     public function persona()
     {
         return $this->hasOne("App\Persona", 'doljnost_id', 'id');
+    }
+
+    public function upr()
+    {
+        return $this->belongsTo('App\Upravlenie', 'upr_id', 'id');
     }
 }
