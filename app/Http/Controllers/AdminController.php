@@ -27,4 +27,10 @@ class AdminController extends Controller
         ];
         return response()->json($data, 200, $headers);
     }
+    public function test()
+    {
+        $d = Uprava::with("doljnosti")->get()->toJson();
+        echo "<pre>";
+        return $d;
+    }
 }
