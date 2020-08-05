@@ -23,7 +23,7 @@ class AdminController extends Controller
         $headers = [];
         $data = [
             // "parrent"=>Uprava::whereNull('parent_id')->get(),
-            "slujba"=>Uprava::with("children.doljnosti", "doljnosti")->whereNull("parent_id")->get()
+            "slujba"=>Uprava::with(["children.doljnosti.sotrudnik", 'doljnosti'])->whereNull("parent_id")->get()
         ];
         return response()->json($data, 200, $headers);
     }
@@ -32,7 +32,10 @@ class AdminController extends Controller
     {
         
         $d = $this->ContactAll($request);
-        echo "<pre>";
+        
         return $d;
     }
 }
+// =>function($q){
+//     return $q->join('doljnost_lists', 'doljnost_lists.id', '=', 'doljnost.doljnost_id')->select('doljnost_lists.doljnost');
+// }

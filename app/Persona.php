@@ -22,4 +22,11 @@ class Persona extends Model
     {
         return $this->hasOne('App\Zvanie', 'id', 'zvanie_id');
     }
+    public function toArray()
+    {
+        return [
+            'fn'=>$this->fn,
+            'zvanie_id'=>$this->zvanie()
+        ];
+    }
 }

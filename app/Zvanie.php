@@ -8,4 +8,5 @@ class Zvanie extends Model
 {
     protected $table = "zvanie_lists";
     public $timestamps = false;
+    protected $hiddent = ['zvanie_id'];
 }

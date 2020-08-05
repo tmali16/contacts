@@ -3,14 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
 
 class doljnost_list extends Model
 {
     public $timestamps = false;
     protected $hidden = [];
 
-    public function sotrudnik()
+    
+    public function upravlenie()
     {
-        return $this->belongsToMany('App\Persona', 'App\doljnost_list', 'doljnost_id','id');
+        return $this->belongsToMany('App\Upravlenie', 'doljnost', 'doljnost_id', 'upravlenie_id');
     }
+    
 }
