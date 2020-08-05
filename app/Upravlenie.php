@@ -18,8 +18,15 @@ class Upravlenie extends Model
     public function doljnosti()
     {
         // return $this->hasMany("App\Persona", "id", "doljnost_id");
-        return $this->belongsToMany('App\doljnost_list', 'doljnost', 'upr_id', 'doljnost_id');
+        return $this->belongsToMany("App\doljnost_list", 'doljnost', 'upravlenie_id', 'doljnost_id');
     }
+
+    public function sotrudnik()
+    {
+        return $this->belongsToMany(self::class, 'persona', 'upravlenie_id', 'id');
+    }
+    
+
 
     public function is_parent(){
         if ($this->parent_id != null){

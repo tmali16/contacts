@@ -19,4 +19,8 @@ class doljnost extends Model
     {
         return $this->belongsTo('App\Upravlenie', 'upr_id', 'id');
     }
+    // public function sotrudniki()
+    // {
+    //     return $this->belongsToMany(self::class, 'doljnost_list', 'id', 'doljnost_id')
+    // }
 }

@@ -22,11 +22,12 @@ class AdminController extends Controller
     {
         $headers = [];
         $data = [
-            "parrent"=>Uprava::whereNull('parent_id')->get(),
-            "slujba"=>Uprava::with(["children.doljnosti.persona", 'doljnosti.persona'])->whereNull("parent_id")->get()
+            // "parrent"=>Uprava::whereNull('parent_id')->get(),
+            "slujba"=>Uprava::with("children.doljnosti", "doljnosti")->whereNull("parent_id")->get()
         ];
         return response()->json($data, 200, $headers);
     }
+
     public function test(Request $request)
     {
         
