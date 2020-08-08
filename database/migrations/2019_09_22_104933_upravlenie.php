@@ -17,13 +17,13 @@ class Upravlenie extends Migration
             $table->bigIncrements('id');
             $table->string('fullname');
             $table->string("shortname")->nullable()->default(null);
-            $table->bigInteger('gu_id')->unsigned()->index()->nullable()->default(null);
+            // $table->bigInteger('gu_id')->unsigned()->index()->nullable()->default(null);
             $table->bigInteger('parent_id')->unsigned()->index()->nullable()->default(null);
             // $table->timestamps();
         });
 
         Schema::table("upravlenie", function(Blueprint $table){
-            $table->foreign('gu_id')->references('id')->on('gupravlenie');
+            // $table->foreign('gu_id')->references('id')->on('gupravlenie');
         });
     }
 

@@ -14115,3 +14115,11 @@ body {
   color: #3490dc;
 }
 
+.on_hover_item {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.on_hover_item:hover {
+  box-shadow: -2px -1px 30px -17px rgba(0, 0, 0, 0.71);
+}
+

@@ -49,3 +49,9 @@ html, body{
 .sidebar_admin_active_class{
     color: $blue;
 }
+.on_hover_item{
+    transition: box-shadow 0.3s ease-in-out;
+    &:hover{
+        box-shadow: -2px -1px 30px -17px rgba(0,0,0,0.71);
+    }    
+}

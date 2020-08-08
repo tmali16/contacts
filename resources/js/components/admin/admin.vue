@@ -23,27 +23,62 @@
                             <b-icon icon="shield-shaded"></b-icon> Службы
                         </template>
                         <b-card-text>
+                            <b-col cols="12" class="mb-2 bg-white p-2">
+                                <b-button size="sm" class="text-white" variant="info" squared @click="FormAddUpr()">Добавить</b-button>
+                                <b-button size="sm" class="text-white" variant="info" squared @click="FormAddSlujba()">Добавить сотрудника</b-button>
+                            </b-col>
                             <b-card no-body class="rounded-0 border-0">
                                 <b-card-header header-class="menu-them-header">
                                     <h5 class="m-0">Службы </h5> 
                                 </b-card-header>
-                                <b-card-body body-class="row " >
-                                    <b-col cols="12" class="mb-4">
-                                        <b-button size="sm" class="text-white" variant="info" squared @click="FormAddUpr()">Добавить</b-button>
-                                        <b-button size="sm" class="text-white" variant="info" squared @click="FormAddSlujba()">Добавить сотрудника</b-button>
-                                    </b-col>
+                                <b-card-body body-class="row ">                                    
                                     <b-col cols="3" class="overflow-auto" style="height: 300px;">
-                                        <b-tree-view 
-                                            ref="tree"
-                                            :nodesDraggable="false"
-                                            :renameNodeOnDblClick="false"
-                                            :data="treeData" 
-                                            :contextMenu="false" 
-                                            :contextMenuItems="contextMenuItems" :showicon="false" @nodeSelect="nodeSelect"
+                                        <b-tree-view ref="tree" :nodesDraggable="false" :renameNodeOnDblClick="false" :data="treeData" 
+                                            :contextMenu="false"  :contextMenuItems="contextMenuItems" :showicon="false" @nodeSelect="nodeSelect"
                                             nodeKeyProp="id" nodeLabelProp="shortname"></b-tree-view>
                                     </b-col>
                                     <b-col cols="9">
-                                        {{selectedNode.fullname}} {{selectedNode.id}}
+                                        <b-card class="mb-2 rounded-0 border-0" body-class="pl-5 pr-0" header-class="p-2">
+                                            <template v-slot:header v-if="selectedNode.fullname.length > 2">
+                                                <h5 class="m-0">{{selectedNode.fullname}}</h5>
+                                            </template>
+                                            <!-- ******************************************************************************************************************* -->
+                                            <b-media tag="li" class="on_hover_item mb-2 p-3" v-for="(item, index) in selectedNode.doljnosti" :key="index+2*9">
+                                                <template v-slot:aside>
+                                                    <b-avatar variant="primary" text="BV"></b-avatar>
+                                                </template>
+                                                <h5 class="mt-0 mb-1">{{item.fn + " " + item.mn + " " +item.ln}}</h5>
+                                                <p class="mb-0">{{item.doljnost}}</p>
+                                            </b-media>
+
+                                            <!-- ******************************************************************************************************************* -->
+                                            <!-- <b-card class="mb-2 rounded-0 border-0" body-class="on_hover_item" header-class="p-2 mb-2"  v-for="(item, index) in selectedNode.doljnosti" :key="index+1*8">
+                                                <template v-slot:header v-if="selectedNode.fullname.length > 2">
+                                                    <h5 class="m-0">{{selectedNode.fullname}}</h5>
+                                                </template>
+                                                <b-media tag="li" class="mb-2">
+                                                    <template v-slot:aside>
+                                                        <b-img blank blank-color="#cba" width="64" alt="placeholder"></b-img>
+                                                    </template>
+                                                    <h5 class="mt-0 mb-1">{{item.fn + " " + item.mn + " " +item.ln}}</h5>
+                                                    <p class="mb-0">{{item.doljnost}}</p>
+                                                </b-media>
+                                            </b-card> -->
+                                            <div v-if="selectedNode.children != null">
+                                                <b-card class="mb-2 rounded-0 border-0" header-class="p-2"  v-for="(iu, index) in selectedNode.children" :key="index+1*8">
+                                                    <template v-slot:header v-if="iu.fullname.length > 2">
+                                                        <h5 class="m-0">{{iu.fullname}}</h5>
+                                                    </template>
+                                                    <b-media tag="li" class="on_hover_item mb-2 p-3" v-for="(item, index) in iu.doljnosti" :key="index+2*9">
+                                                        <template v-slot:aside>
+                                                            <b-img blank blank-color="#cba" width="64" alt="placeholder"></b-img>
+                                                        </template>
+                                                        <h5 class="mt-0 mb-1">{{item.fn + " " + item.mn + " " +item.ln}}</h5>
+                                                        <p class="mb-0">{{item.doljnost}}</p>
+                                                    </b-media>
+                                                </b-card>
+                                            </div>
+                                        </b-card>                                                  
                                     </b-col>
                                 </b-card-body>
                             </b-card>
@@ -99,7 +134,30 @@
                 selectedNode: {
                     fullname: "",
                     shortname: "",
-                    id: 0
+                    id: 0,
+                    doljnosti: [
+                        {
+                            doljnost: "",
+                            fn:"",
+                            mn:"",
+                            ln:"",
+                            zvanie: ""
+                        }
+                    ], 
+                    children: [{
+                        fullname: "",
+                        shortname: "",
+                        id: 0,
+                        doljnosti: [
+                            {
+                                doljnost: "",
+                                fn:"",
+                                mn:"",
+                                ln:"",
+                                zvanie: ""
+                            }
+                        ],
+                    }]
                 },
                 upr_modal: false,
                 newData:{
@@ -132,7 +190,6 @@
                 
             },
             nodeSelect(node, isSelected) {
-                // console.log('Node ' + node.data + ' has been ' + (isSelected ? 'selected' : 'deselected'))
                 if (isSelected) {
                     this.selectedNode = node.data
                 } else if (node.data === this.selectedNode) {

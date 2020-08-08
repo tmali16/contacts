@@ -13,11 +13,11 @@ class CreateGupravleniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('gupravlenie', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('fullname');
-            $table->string("shortname")->nullable()->default(null);
-        });
+        // Schema::create('gupravlenie', function (Blueprint $table) {
+        //     $table->bigIncrements('id');
+        //     $table->string('fullname');
+        //     $table->string("shortname")->nullable()->default(null);
+        // });
     }
 
     /**
@@ -27,6 +27,6 @@ class CreateGupravleniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gupravlenie');
+        // Schema::dropIfExists('gupravlenie');
     }
 }
